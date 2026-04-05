@@ -19,14 +19,9 @@ jobs:
               with:
                   java-version: '17'
                   distribution: 'temurin'
-            
-            - name: Set up Maven
-              uses: stCarolas/setup-maven@v5
-              with:
-                  maven-version: 3.8.2
-            
             - name: run tests
-              run: run test
+              run: ./mvnw test
+    
     build:
         needs:
           - test
@@ -41,14 +36,9 @@ jobs:
               with:
                   java-version: '17'
                   distribution: 'temurin'
-                  
-            - name: Set up Maven
-              uses: stCarolas/setup-maven@v5
-              with:
-                  maven-version: 3.8.2
 
             - name: build a jar
-              run: mvn clean package -DskipTests
+              run: ./mvnw clean package -DskipTests
             
             - name: login to docker hub 
               uses: docker/login-action@v2
