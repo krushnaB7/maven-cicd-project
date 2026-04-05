@@ -19,8 +19,15 @@ jobs:
               with:
                   java-version: '17'
                   distribution: 'temurin'
-            - name: run tests
+                  
+            - name: Make mvnw executable
+              run: chmod +x mvnw
+
+            - name: Run Tests
               run: ./mvnw test
+
+
+            
     
     build:
         needs:
@@ -37,7 +44,10 @@ jobs:
                   java-version: '17'
                   distribution: 'temurin'
 
-            - name: build a jar
+            - name: Make mvnw executable
+              run: chmod +x mvnw
+
+            - name: Build JAR
               run: ./mvnw clean package -DskipTests
             
             - name: login to docker hub 
@@ -47,8 +57,7 @@ jobs:
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
             
             - name: build docker image
-              run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/demo-latest .
+              run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/demo:latest .
 
             - name: push docker image
-              run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/demo-latest
-              
+              run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/demo:latest
